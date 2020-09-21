@@ -7,10 +7,10 @@ const p = path.join(rootDir,'data','products.json');
 const getProductsFromFile = cb =>{
     fs.readFile(p,(err,data)=>{
         if(err){
-            cb([]);
+            return cb([]);
         }
         else {
-            cb(JSON.parse(data));
+            return cb(JSON.parse(data));
         }
     })
 }
