@@ -1,13 +1,15 @@
+//inbuilt
 const path = require('path');
 
+//third-party
 const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
+//user-made
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const errorController = require('./controllers/error');
