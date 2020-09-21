@@ -1,8 +1,19 @@
-// const products =[];
 const fs= require('fs');
 const path = require('path');
 
 const rootDir = require('../util/path');
+
+const p = path.join(rootDir,'data','products.json');
+const getProductsFromFile = cb =>{
+    fs.readFile(p,(err,data)=>{
+        if(err){
+            cb([]);
+        }
+        else {
+            cb(JSON.parse(data));
+        }
+    })
+}
 
 class Product {
 
@@ -11,32 +22,30 @@ class Product {
     }
 
     save(){
-        const p = path.join(rootDir,'data','products.json');
         let products =[];
-        fs.readFile(p,(err,data)=>{
-            console.log(err,data);
-            if (!err){
-                products = JSON.parse(data);
-                console.log("old products",products);
-            }
+        getProductsFromFile((products)=>{
             products.push(this);
             console.log("products",products);
             fs.writeFile(p,JSON.stringify(products),(err)=>{
                 console.log("err",err);
             })
-        })
-        // products.push(this);
+        });
+        // fs.readFile(p,(err,data)=>{
+        //     console.log(err,data);
+        //     if (!err){
+        //         products = JSON.parse(data);
+        //         console.log("old products",products);
+        //     }
+        //     products.push(this);
+        //     console.log("products",products);
+        //     fs.writeFile(p,JSON.stringify(products),(err)=>{
+        //         console.log("err",err);
+        //     })
+        // })
     }
 
     static fetchAll(cb){
-        const p = path.join(rootDir,'data','products.json');
-        fs.readFile(p,(err,data)=>{
-            if(err){
-                cb([]);
-            }
-            cb(JSON.parse(data));
-        })
-        // return products;
+        getProductsFromFile(cb);
     }
 }
 
