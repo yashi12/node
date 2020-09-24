@@ -24,8 +24,6 @@ const getProducts =  (req, res, next) => {
             pageTitle: 'Products',
             path: '/admin/products',
             hasProducts: products.length > 0,
-            activeShop: true,
-            productCSS: true
         });
     });
 };

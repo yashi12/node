@@ -7,8 +7,6 @@ const getIndex = (req, res, next) => {
             pageTitle: 'Index',
             path: '/',
             hasProducts: products.length > 0,
-            activeShop: true,
-            productCSS: true
         });
     });
 };
@@ -30,8 +28,6 @@ const getCart = (req, res, next) => {
     res.render('shop/cart', {
         pageTitle: 'Cart',
         path: '/cart',
-        activeShop: true,
-        productCSS: true
     });
 };
 
@@ -39,8 +35,6 @@ const getCheckout = (req, res, next) => {
     res.render('shop/checkout', {
         pageTitle: 'Checkout',
         path: '/checkout',
-        activeShop: true,
-        productCSS: true
     });
 };
 
