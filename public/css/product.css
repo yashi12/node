@@ -23,3 +23,8 @@
 .product__description {
     text-align: center;
 }
+
+.image_dimen{
+    height: 230px;
+    width: 100%;
+}
