@@ -1,5 +1,6 @@
 const fs= require('fs');
 const path = require('path');
+const uniqid = require('uniqid');
 
 const rootDir = require('../util/path');
 
@@ -26,6 +27,8 @@ class Product {
 
     save(){
         let products =[];
+        this.id = uniqid();
+        this.id = Math.random();
         getProductsFromFile((products)=>{
             products.push(this);
             console.log("products",products);
