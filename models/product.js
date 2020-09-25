@@ -26,7 +26,7 @@ class Product {
     }
 
     save(){
-        let products =[];
+        // let products =[];
         this.id = uniqid();
         this.id = Math.random();
         getProductsFromFile((products)=>{
@@ -36,22 +36,17 @@ class Product {
                 console.log("err",err);
             })
         });
-        // fs.readFile(p,(err,data)=>{
-        //     console.log(err,data);
-        //     if (!err){
-        //         products = JSON.parse(data);
-        //         console.log("old products",products);
-        //     }
-        //     products.push(this);
-        //     console.log("products",products);
-        //     fs.writeFile(p,JSON.stringify(products),(err)=>{
-        //         console.log("err",err);
-        //     })
-        // })
     }
 
     static fetchAll(cb){
         getProductsFromFile(cb);
+    }
+
+    static findById(id, cb){
+        getProductsFromFile(products=>{
+            const product = products.find(p=> p.id === id);
+            cb(product);
+        })
     }
 }
 
