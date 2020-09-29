@@ -40,6 +40,10 @@ const getEditProduct = (req, res, next) => {
     });
 };
 
+const postEditProduct =(req,res,next)=>{
+
+};
+
 const getProducts =  (req, res, next) => {
     Product.fetchAll((products)=>{
         res.render('admin/admin-product-list', {
@@ -55,5 +59,6 @@ module.exports= {
     getAddProducts:getAddProducts,
     postAddProducts:postAddProducts,
     getEditProduct:getEditProduct,
+    postEditProduct:postEditProduct,
     getProducts:getProducts
 }

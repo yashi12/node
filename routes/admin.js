@@ -13,6 +13,9 @@ router.get('/add-product', adminController.getAddProducts);
 // /admin/edit-product => GET
 router.get('/edit-product/:productId', adminController.getEditProduct);
 
+// /admin/edit-product => GET
+router.post('/edit-product', adminController.postEditProduct);
+
 // /admin/products => GET
 router.get('/products',adminController.getProducts);
 
