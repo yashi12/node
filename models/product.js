@@ -3,6 +3,7 @@ const path = require('path');
 const uniqid = require('uniqid');
 
 const rootDir = require('../util/path');
+const Cart = require('./cart');
 
 const p = path.join(rootDir,'data','products.json');
 const getProductsFromFile = cb =>{
@@ -56,6 +57,23 @@ class Product {
         getProductsFromFile(products=>{
             const product = products.find(p=> p.id === id);
             cb(product);
+        })
+    }
+
+    static deleteProduct(id){
+        // console.log(id);
+        getProductsFromFile(products=>{
+            const product = products.find(p=> p.id === id);
+            const productsList = products.filter(p=> p.id !== id);
+            console.log("list",productsList);
+            fs.writeFile(p,JSON.stringify(productsList),(err)=>{
+                console.log("error",err);
+                if(!err){
+                    Cart.deleteById(id,product.cost);
+                }
+            });
+            console.log(product.cost);
+
         })
     }
 }

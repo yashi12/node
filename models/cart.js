@@ -33,6 +33,29 @@ class cart{
             });
         });
     };
+
+    static deleteById(id,price){
+        fs.readFile(p,(err,data)=>{
+            let cart = { products:[], totalPrice:0};
+            if(!err){
+                cart = JSON.parse(data);
+            }
+            const existingProduct = cart.products.find(p=> p.id === id);
+            if(existingProduct){
+                const qty = existingProduct.qty;
+                const updatedCart = {...cart};
+                console.log("updated cart",updatedCart);
+                console.log("total price",updatedCart.totalPrice);
+                updatedCart.totalPrice = updatedCart.totalPrice - price*qty;
+                console.log("price",price,"qty",qty,"total price",updatedCart.totalPrice);
+                updatedCart.products = updatedCart.products.filter(p=> p.id !== id);
+                console.log("products",updatedCart.products);
+                fs.writeFile(p,JSON.stringify(updatedCart),(err)=>{
+                    console.log(err);
+                });
+            }
+        });
+    }
 };
 
 module.exports=cart;
