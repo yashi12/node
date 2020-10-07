@@ -18,7 +18,7 @@ const db = require('./util/database');
 db.execute('Select * from products')
     .then(result=>{
         console.log(result[0]);
-        console.log(result[1]);
+        // console.log(result[1]);
     })
     .catch(err=>{
         console.log(err);
