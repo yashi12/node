@@ -14,9 +14,14 @@ const postAddProducts =  (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const cost = req.body.cost;
     const product = new Product(null, title,imageUrl,description,cost);
-    product.save();
-    // products.push({ title: req.body.title });
-    res.redirect('/');
+    product
+        .save()
+        .then(()=>{
+            res.redirect('/');
+        })
+        .catch(err=>{
+            console.log(err);
+        });
 };
 
 const getEditProduct = (req, res, next) => {
