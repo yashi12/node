@@ -18,15 +18,11 @@ class Product {
     }
 
     static fetchAll(){
-
         return db.execute('SELECT * FROM products');
     }
 
     static findById(id){
-        // getProductsFromFile(products=>{
-        //     const product = products.find(p=> p.id === id);
-        //     cb(product);
-        // })
+        return db.execute('SELECT * FROM products WHERE products.id= ?',[id]);
     }
 
     static deleteProduct(id){
