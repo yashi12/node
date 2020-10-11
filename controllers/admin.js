@@ -13,15 +13,6 @@ const postAddProducts =  (req, res, next) => {
     const description = req.body.description;
     const imageUrl = req.body.imageUrl;
     const cost = req.body.cost;
-    // const product = new Product(null, title,imageUrl,description,cost);
-    // product
-    //     .save()
-    //     .then(()=>{
-    //         res.redirect('/');
-    //     })
-    //     .catch(err=>{
-    //         console.log(err);
-    //     });
     Product.create({
         title:title,
         cost:cost,

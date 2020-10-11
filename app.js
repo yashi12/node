@@ -15,15 +15,6 @@ const shopRoutes = require('./routes/shop');
 const errorController = require('./controllers/error');
 const sequelize = require('./util/database');
 
-// db.execute('Select * from products')
-//     .then(result=>{
-//         console.log(result[0]);
-//         // console.log(result[1]);
-//     })
-//     .catch(err=>{
-//         console.log(err);
-//     });
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
