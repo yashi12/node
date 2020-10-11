@@ -22,6 +22,7 @@ const postAddProducts =  (req, res, next) => {
         .catch(err=>{
             console.log(err);
         });
+
 };
 
 const getEditProduct = (req, res, next) => {
