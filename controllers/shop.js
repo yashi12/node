@@ -35,18 +35,32 @@ const getProducts = (req, res, next) => {
 
 const getProductDetail = (req,res,next)=>{
    const productId = req.params.productId;
-   Product.findById(productId)
-       .then(([product])=>{
-           console.log(product);
+   Product.findAll({where:{id:productId}})
+       .then(products=>{
+           console.log(products);
            res.render('shop/product-detail',{
-               product:product[0],
+               product:products[0],
                path:'/products',
-               pageTitle:product[0].title
-           })
+               pageTitle:products[0].title
+           });
        })
        .catch(err=>{
-           console.log("while fetching detail of item",err);
+           console.log("err while getting product detail",err);
        });
+
+   // Product.findById(productId)
+   //     // returns a  single product so no use of product[0], does not return array
+   //     .then(product=>{
+   //         console.log(product);
+   //         res.render('shop/product-detail',{
+   //             product:product,
+   //             path:'/products',
+   //             pageTitle:product.title
+   //         })
+   //     })
+   //     .catch(err=>{
+   //         console.log("err while getting product detail",err);
+   //     });
 };
 
 const getCart = (req, res, next) => {
