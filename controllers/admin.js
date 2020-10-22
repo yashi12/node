@@ -35,7 +35,8 @@ const getEditProduct = (req, res, next) => {
         return res.redirect('/');
     }
     const productId = req.params.productId;
-    Product.findAll({where:{id:productId}})
+    // Product.findAll({where:{id:productId}})
+    req.user.getProducts({where:{id:productId}})
         .then(products=>{
             console.log("prods are:",products[0]);
             if (!products[0]) {
@@ -95,7 +96,8 @@ const postEditProduct = (req, res, next) => {
 };
 
 const getProducts = (req, res, next) => {
-    Product.findAll()
+    // Product.findAll()
+    req.user.getProducts()
         .then(products => {
             res.render('admin/admin-product-list', {
                 prods: products,
