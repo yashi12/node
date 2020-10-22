@@ -13,11 +13,13 @@ const postAddProducts = (req, res, next) => {
     const description = req.body.description;
     const imageUrl = req.body.imageUrl;
     const cost = parseFloat(req.body.cost);
+    
     Product.create({
         title: title,
         cost: cost,
         imageUrl: imageUrl,
-        description: description
+        description: description,
+        userId: req.user.id
     }).then(result => {
         console.log("added proct is:", result);
         res.redirect('/');
