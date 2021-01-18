@@ -11,17 +11,17 @@
                 <li class="cart__item">
                     <!--                    <div class="row">-->
                     <div class="col-sm col-4">
-                        <img class="card-img-left cart-img thumbnail pull-left" src="<%= p.imageUrl %>"
+                        <img class="card-img-left cart-img thumbnail pull-left" src="<%= p.productId.imageUrl %>"
                              alt="Card image cap">
                     </div>
                     <div class="col-sm col-4">
-                        <h1 class="list-group-item">Item: <%= p.title %> </h1>
+                        <h1 class="list-group-item">Item: <%= p.productId.title %> </h1>
                         <h2 class="list-group-item">Quantity: <%= p.quantity %> </h2>
-                        <h2 class="list-group-item">Cost: <%= p.cost %> </h2>
+                        <h2 class="list-group-item">Cost: <%= p.productId.cost %> </h2>
                     </div>
                     <div class="col-sm col-4 cart_left m-3 p-3">
                         <form action="/cart-delete-item" method="post">
-                            <input type="hidden" value="<%= p._id %>" name="productId">
+                            <input type="hidden" value="<%= p.productId._id %>" name="productId">
                             <button class="btn btn-outline-danger" type="submit">Delete</button>
                         </form>
                     </div>

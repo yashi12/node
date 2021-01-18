@@ -4,13 +4,14 @@ const path = require('path');
 //third-party
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 
-const mongoConnect = require('./util/database').mongoConnect;
+// const mongoConnect = require('./util/database').mongoConnect;
 
 
 
@@ -32,11 +33,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req,res,next)=>{
-    User.findUser('5ff6a7c39157f9789e98533e')
+    User.findById('6005b7488a92211bbc18bfde')
         .then(user=>{
-            req.user = new User(user.name,user.email,user.cart,user._id);
+            req.user = user;
             console.log("type of:",typeof user);
-            console.log("user is:" ,req.user);
             next();
         })
         .catch(err=>{
@@ -46,41 +46,28 @@ app.use((req,res,next)=>{
 
 app.use('/admin',adminRoutes);
 app.use(shopRoutes);
-//
-// app.use(errorController.get404);
-//
-// // associations
-// Product.belongsTo(User,{constraints:true,onDelete:'CASCADE'});
-// User.hasMany(Product);
-// User.hasOne(Cart);
-// Cart.belongsTo(User);
-// Cart.belongsToMany(Product,{through: CartItem});
-// Product.belongsToMany(Cart,{through: CartItem});
-//
-//
-//
-// // sequelize.sync({force:true})
-// sequelize.sync()
-//     .then(res=>{
-//         return User.findByPk(1)
-//     })
-//     .then(user=>{
-//         if(!user){
-//             return User.create({name:'Yashi',email:'abc@gmail.com'})
-//         }
-//         return User;
-//     })
-//     .then(user=>{
-//         console.log("user*",user);
-//         app.listen(3000);
-//     })
-//     .catch(err=>{
-//         console.log(err);
-//     })
 
 
 
 
-mongoConnect(()=>{
-    app.listen(3000);
-});
+mongoose.connect('mongodb+srv://yashi:abcd1234@shop.c0poi.mongodb.net/shop?retryWrites=true&w=majority')
+    .then(result =>{
+        User.findOne()
+            .then(user =>{
+                if(!user){
+                    const user = new User({
+                        name: 'Yashi',
+                        email: 'yashi@gmail.com',
+                        cart:{
+                            items:[]
+                        }
+                    });
+                    user.save();
+                }
+            });
+        app.listen(3000);
+    })
+    .catch(err=>{
+        console.log("err connecting to mongoose",err);
+    });
+

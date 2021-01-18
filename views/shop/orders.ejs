@@ -13,16 +13,16 @@
 
                 <ul class="cart__item-list">
                     <h1>Order- # <%= order._id %></h1>
-                    <% order.items.forEach(item => { %>
+                    <% order.products.forEach(item => { %>
                         <li class="cart__item">
                             <div class="col-sm col-6">
-                                <img class="card-img-left cart-img thumbnail pull-left" src="<%= item.imageUrl %>"
+                                <img class="card-img-left cart-img thumbnail pull-left" src="<%= item.product.imageUrl %>"
                                      alt="Card image cap">
                             </div>
                             <div class="col-sm col-6">
-                                <h1 class="list-group-item">Item: <%= item.title %> </h1>
+                                <h1 class="list-group-item">Item: <%= item.product.title %> </h1>
                                 <h2 class="list-group-item">Quantity: <%= item.quantity %> </h2>
-                                <h2 class="list-group-item">Cost: <%= item.cost %> </h2>
+                                <h2 class="list-group-item">Cost: <%= item.product.cost %> </h2>
                             </div>
                         </li>
                     <% }) %>
