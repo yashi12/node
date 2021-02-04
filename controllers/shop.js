@@ -10,6 +10,7 @@ const getIndex = (req, res, next) => {
                 pageTitle: 'Index',
                 path: '/',
                 hasProducts: products.length > 0,
+                isAuthenticated: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -27,7 +28,8 @@ const getProducts = (req, res, next) => {
                 path: '/products',
                 hasProducts: products.length > 0,
                 activeShop: true,
-                productCSS: true
+                productCSS: true,
+                isAuthenticated: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -44,7 +46,8 @@ const getProductDetail = (req, res, next) => {
             res.render('shop/product-detail', {
                 product: product,
                 path: '/products',
-                pageTitle: product.title
+                pageTitle: product.title,
+                isAuthenticated: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -76,7 +79,8 @@ const getCart = (req, res, next) => {
             res.render('shop/cart', {
                 pageTitle: 'Cart',
                 path: '/cart',
-                products: products
+                products: products,
+                isAuthenticated: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -86,17 +90,17 @@ const getCart = (req, res, next) => {
 };
 
 const postCart = (req, res, next) => {
-    const productId = req.body.productId;
-    Product.findById(productId)
-        .then(product => {
-            return req.user.addToCart(product);
-        })
-        .then(result => {
-        console.log("product add to cart", result);
-        res.redirect('/cart');
-    }).catch(err => {
-        console.log("err add to cart", err);
-    });
+        const productId = req.body.productId;
+        Product.findById(productId)
+            .then(product => {
+                return req.user.addToCart(product);
+            })
+            .then(result => {
+                console.log("product add to cart", result);
+                res.redirect('/cart');
+            }).catch(err => {
+            console.log("err add to cart", err);
+        });
 };
 
 const getOrders = (req, res, next) => {
@@ -105,7 +109,8 @@ const getOrders = (req, res, next) => {
             res.render('shop/orders', {
                 pageTitle: 'Your Orders',
                 path: '/orders',
-                orders: orders
+                orders: orders,
+                isAuthenticated: req.session.isLoggedIn
             });
         })
         .catch(err=>{
