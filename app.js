@@ -26,23 +26,13 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-
-// const mongoConnect = require('./util/database').mongoConnect;
-
-
-//
-// //user-made
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const loginRoutes = require('./routes/auth');
 const errorController = require('./controllers/error');
-// const sequelize = require('./util/database');
-// const Product = require('./models/product');
 const User = require('./models/user');
-// const Cart = require('./models/cart');
-// const CartItem = require('./models/cart-item');
 
-const Stream = fs.createWriteStream(path.join(__dirname,'access.log'),{flags:'a'});
+const Stream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'});
 app.use(helmet({
     contentSecurityPolicy: false,
 }));
@@ -61,24 +51,23 @@ app.use(
 );
 app.use(csrfProtection);
 app.use(flash());
-app.use((req,res,next)=>{
-    if (!req.session.user){
+app.use((req, res, next) => {
+    if (!req.session.user) {
         return next();
     }
     User.findById(req.session.user._id)
-        .then(user=>{
+        .then(user => {
             if (!user) {
                 return next();
             }
             req.user = user;
-            console.log("type of:",typeof user);
             next();
         })
-        .catch(err=>{
+        .catch(err => {
             next(new Error(err));
         });
 });
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;
     res.locals.csrfToken = req.csrfToken();
     next();
@@ -99,7 +88,7 @@ app.use((error, req, res, next) => {
     });
 });
 
-mongoose.connect(URI)
+mongoose.connect(URI, { useNewUrlParser: true , useUnifiedTopology: true })
     .then(result => {
         User.findOne()
             .then(user => {

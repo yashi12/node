@@ -1,0 +1,5 @@
+<form action="/cart" method="get">
+    <button type="submit" class="btn btn-outline-success">Export to csv</button>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input type="hidden" value="<%= product._id%>" name="productId">
+</form>

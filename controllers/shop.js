@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const Order = require('../models/order');
+const productService = require("../services/productService");
 // const Cart = require('../models/cart');
 
 const getIndex = (req, res, next) => {
@@ -20,17 +21,54 @@ const getIndex = (req, res, next) => {
 
 const getProducts = (req, res, next) => {
     Product.find()
-        .then(products => {
-            console.log("products",products);
-            res.render('shop/product-list', {
-                prods: products,
-                pageTitle: 'Shop',
-                path: '/products',
-                hasProducts: products.length > 0,
-                activeShop: true,
-                productCSS: true,
-                isAuthenticated: req.session.isLoggedIn
-            });
+        .then( products => {
+            const length = products.length;
+            let page = 1;
+            const limit = 2;
+            if(req.query.page) {
+                page = parseInt(req.query.page);
+            }
+            const startIndex = (page - 1) * limit
+            const endIndex = page * limit
+
+            const results = {}
+
+            if (endIndex < length) {
+                results.next = {
+                    page: page + 1,
+                    limit: limit
+                }
+            }
+
+            if (startIndex > 0) {
+                results.previous = {
+                    page: page - 1,
+                    limit: limit
+                }
+            }
+            try {
+                results.data = products.slice(startIndex,endIndex);
+                res.render('shop/product-list', {
+                    prods: results.data,
+                    pageTitle: 'Shop',
+                    path: '/products',
+                    hasProducts: products.length > 0,
+                    activeShop: true,
+                    productCSS: true,
+                    isAuthenticated: req.session.isLoggedIn
+                });
+            } catch (e) {
+                res.status(500).json({ message: e.message })
+            }
+            // res.render('shop/product-list', {
+            //     prods: products,
+            //     pageTitle: 'Shop',
+            //     path: '/products',
+            //     hasProducts: products.length > 0,
+            //     activeShop: true,
+            //     productCSS: true,
+            //     isAuthenticated: req.session.isLoggedIn
+            // });
         })
         .catch(err => {
             console.log("err fetching all products:", err);
@@ -161,6 +199,32 @@ const postOrder =  (req, res, next) => {
     });
 };
 
+// controller for exporting a products data to a CSV file
+const exportToCSV = async (req, res) => {
+    console.log("entered")
+	try {
+		let id = req.params.productId;
+        console.log(id);
+
+        // let resp = await Product.findById(id)
+
+        // console.log("resp",resp);
+
+		resp = await productService.exportToCSV(id);
+        console.log("response",resp)
+		if (resp.success == true) {
+			res.send({ success: true, message: "Product Exported to CSV file" });
+		} else {
+			res.send({
+				success: false,
+				message: "Error in export CSV Product Service",
+			});
+		}
+	} catch (err) {
+		res.send({ success: false, message: "Error in exporting product to CSV" });
+	}
+};
+
 module.exports = {
     getProducts: getProducts,
     getIndex: getIndex,
@@ -170,5 +234,6 @@ module.exports = {
     getProductDetail: getProductDetail,
     postCart: postCart,
     postDeleteCartProduct:postDeleteCartProduct,
-    postOrder:postOrder
+    postOrder:postOrder,
+    exportToCSV:exportToCSV
 }

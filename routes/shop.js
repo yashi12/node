@@ -14,6 +14,8 @@ router.get('/products',shopController.getProducts);
 
 router.get('/products/:productId',shopController.getProductDetail);
 
+router.get('/products/export/:productId/',shopController.exportToCSV);
+
 router.get('/cart',isAuth,shopController.getCart);
 
 router.post('/cart',isAuth,shopController.postCart);

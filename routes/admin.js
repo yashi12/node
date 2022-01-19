@@ -2,7 +2,7 @@ const path = require('path');
 
 const express = require('express');
 const isAuth = require('../middleware/auth-check');
-const { body } = require('express-validator/check');
+const { body } = require('express-validator');
 
 const rootDir = require('../util/path');
 const adminController = require('../controllers/admin');

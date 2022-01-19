@@ -25,6 +25,10 @@
                         <a href="/products/<%= product._id %>" class="btn btn-outline-warning">Product details</a>
                         <%- include('../includes/add-to-cart.ejs',{product:product})%>
                     </div>
+                    <div class="card__actions">
+                        <a href="/products/export/<%= product._id %>" class="btn btn-outline-warning">Export details</a>
+                        <!-- <%- include('../includes/add-to-cart.ejs',{product:product})%> -->
+                    </div>
                 </article>
             <% } %>
         </div>

@@ -1,5 +1,5 @@
 const Product = require('../models/product');
-const { validationResult } = require('express-validator/check');
+const { validationResult } = require('express-validator');
 
 const getAddProducts = (req, res, next) => {
     res.render('admin/edit-product', {
@@ -45,7 +45,6 @@ const postAddProducts = (req, res, next) => {
             imageUrl: imageUrl,
             userId: req.user._id
         });
-        console.log("type of add cost", typeof (cost));
         product.save()
             .then(result => {
                 // console.log(result);
@@ -116,7 +115,6 @@ const postEditProduct = (req, res, next) => {
     const updatedDescription = req.body.description;
     const updatedImageUrl = req.body.imageUrl;
     const updatedCost = parseFloat(req.body.cost.trim());
-    console.log("type of cost",typeof(updatedCost));
 
     const errors = validationResult(req);
 
